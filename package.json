@@ -1,0 +1,11 @@
+{
+  "name": "mini-vue",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "http-server -p 13003"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^14.0.0"
+  }
+}
