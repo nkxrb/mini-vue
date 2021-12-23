@@ -1,7 +1,6 @@
 export function createElement (vm, tag, prop, children) {
   const el = document.createElement(tag)
   vm.el = el
-
   if (Array.isArray(prop)) {
     children = prop
   } else {
@@ -16,6 +15,5 @@ export function createElement (vm, tag, prop, children) {
   if (children && children.length > 0) {
     children.forEach(child => el.append(child))
   }
-
   return el
 }
