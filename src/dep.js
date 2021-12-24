@@ -1,5 +1,7 @@
+let uid = 0
 class Dep {
   constructor() {
+    this.id = ++uid
     this.subs = []
   }
 
@@ -16,7 +18,7 @@ class Dep {
   notify () {
     // 因为可能存在多个依赖，此处使用数组形式遍历触发
     // 依赖是有先后顺序的，因此需要提前排下序
-    this.subs.sort((a, b) => a - b)
+    this.subs.sort((a, b) => a.id - b.id)
     this.subs.forEach(sub => sub.update())
   }
 }
