@@ -1,4 +1,5 @@
 import { abserver } from './abserver.js'
+import { patch } from './patch.js'
 import { createElement } from './render.js'
 import { noop } from './shared.js'
 import Watcher from './watcher.js'
@@ -16,15 +17,14 @@ function Vue (app) {
   }
 
   vm._v = val => {
-    return val
+    return val != null ? val.toString() : ''
   }
 
   function updateComponent () {
     const container = vm.container
-    // 调用render函数，获得真实dom节点
-    const root = app.render ? app.render.call(vm) : ''
-    container.innerHTML = ''
-    container.append(root)
+    // 调用render函数，获得虚拟dom节点
+    const vnode = app.render ? app.render.call(vm) : ''
+    patch(vm._vnode, vnode, container, vm)
   }
 
 
