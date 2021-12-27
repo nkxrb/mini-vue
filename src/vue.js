@@ -53,7 +53,7 @@ function Vue (app) {
   // 执行app的render函数，得到最终渲染的dom对象
   const root = app.render ? app.render.call(vm) : ''
 
-  const mount = selector => {
+  const $mount = selector => {
     // 找到#app元素
     const page = document.querySelector(selector) || document.body
     // 先清空里面的内容
@@ -63,7 +63,7 @@ function Vue (app) {
   }
 
   return {
-    mount
+    $mount
   }
 }
 

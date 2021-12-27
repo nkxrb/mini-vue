@@ -3,4 +3,4 @@
  */
 import Vue, { App } from '../src/vue.js'
 
-new Vue(App).mount('#app')
+new Vue(App).$mount('#app')
