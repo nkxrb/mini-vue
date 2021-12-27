@@ -117,18 +117,17 @@ function updateChildren (oldCh, newCh, container) {
 
       newStart = [++newStartIdx]
     }
+  }
 
-    // 循环匹配结束后，只存在两种情况
-    if (oldStartIdx > oldEndIdx) { // 旧的队列提前遍历完了，说明新的比旧的多，还需要进行插入操作
-      for (let i = newStartIdx; i <= newEndIdx; i++) {
-        container.appendChild(vnodeToDom(newCh[i]))
-      }
-    } else if (newStartIdx > newEndIdx) { // 新的队列提前遍历完了，说明新的比旧的少，还需要把旧的里面剩余节点移除
-      for (let i = oldStartIdx; i <= oldEndIdx; i++) {
-        container.removeChild(oldCh[i].el)
-      }
+  // 循环匹配结束后，只存在两种情况
+  if (oldStartIdx > oldEndIdx) { // 旧的队列提前遍历完了，说明新的比旧的多，还需要进行插入操作
+    for (let i = newStartIdx; i <= newEndIdx; i++) {
+      container.appendChild(vnodeToDom(newCh[i]))
     }
-
+  } else if (newStartIdx > newEndIdx) { // 新的队列提前遍历完了，说明新的比旧的少，还需要把旧的里面剩余节点移除
+    for (let i = oldStartIdx; i <= oldEndIdx; i++) {
+      container.removeChild(oldCh[i].el)
+    }
   }
 }
 
