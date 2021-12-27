@@ -20,6 +20,14 @@ function Vue (app) {
     return val != null ? val.toString() : ''
   }
 
+  vm._l = (list, fn) => {
+    let res = []
+    list.forEach((n, i) => {
+      res.push(fn(n, i))
+    })
+    return res
+  }
+
   function updateComponent () {
     const container = vm.container
     // 调用render函数，获得虚拟dom节点

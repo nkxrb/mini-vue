@@ -14,7 +14,6 @@ export function patch (n1, n2, container, vm) {
   } else {
     updatePatch(n1, n2, container)
   }
-
   // vm是全局不变的对象，因此用_vnode属性来存储本次的虚拟DOM，用于下次更新时比较
   vm._vnode = n2
 }
@@ -29,7 +28,7 @@ function initPatch (vnode, container) {
 }
 
 /**
- * 
+ * 更新节点
  * @param {vnode} n1 旧vnode
  * @param {vnode} n2 新vnode
  * @param {Element} container 父节点
@@ -45,6 +44,10 @@ function updatePatch (n1, n2, container, isSame) {
     updateChildren(n1.children, n2.children, el)
   } else if (isUndef(n2.children)) {
     el.innerHTML = ''
+  } else if (isUndef(n1.children)) {
+    n2.children.forEach(child => {
+      el.appendChild(vnodeToDom(child))
+    })
   }
 
   if (el !== n1.el) { // 当新的节点不是原来旧的节点时，执行替换操作
@@ -137,7 +140,6 @@ function updateChildren (oldCh, newCh, container) {
 function insertBefore (container, n1, n2) {
   container.insertBefore(n1, n2)
 }
-
 
 function findNewInOld (item, arr, startIdx, endIdx) {
   for (let i = startIdx; i <= endIdx; i++) {
