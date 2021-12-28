@@ -2,12 +2,18 @@ export default {
   data: function () {
     return {
       count: 0,
-      test: 1001
+      test: 1001,
+      countList: []
     }
   },
   methods: {
     plus () {
       this.count++
+      this.countList = [...this.countList, this.count]
+    },
+    del (i) {
+      this.countList.splice(i, 1)
+      this.countList = [...this.countList]
     },
     testNoReactive () {
       // 测试修改test属性，不触发重新渲染
@@ -31,7 +37,16 @@ export default {
     return h('div', [
       h('h2', [vm._v(vm.count)]),
       h('button', { on: { click: vm.plus } }, [vm._v('+1')]),
-      h('button', { on: { click: vm.testNoReactive } }, [vm._v('testNoReactive')])
+      h('button', { on: { click: vm.testNoReactive } }, [vm._v('testNoReactive')]),
+      h('div', vm._l((vm.countList), function (n, i) {
+        return h('span', { key: n }, [vm._v(`第${i}次: ${n}`), h('button', {
+          on: {
+            click: function ($event) {
+              return vm.del(i)
+            }
+          }
+        }, ['删除']), h('br')])
+      }))
     ])
 
   }
