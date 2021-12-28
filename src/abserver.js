@@ -26,3 +26,24 @@ function defineReactive (obj, key, val) {
     }
   })
 }
+
+/**
+ * 将data的属性代理到vm._data中去
+ * @param {*} obj 
+ * @param {*} sourceKey 
+ * @param {*} key 
+ */
+export function proxy (obj, sourceKey, key) {
+  function getProp () {
+    return this[sourceKey][key]
+  }
+
+  function setProp (val) {
+    this[sourceKey][key] = val
+  }
+
+  Object.defineProperty(obj, key, {
+    get: getProp,
+    set: setProp
+  })
+}

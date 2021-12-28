@@ -45,6 +45,10 @@ function updatePatch (n1, n2, container, isSame) {
     updateChildren(n1.children, n2.children, el)
   } else if (isUndef(n2.children)) {
     el.innerHTML = ''
+  } else if (isUndef(n1.children)) {
+    n2.children.forEach(child => {
+      el.appendChild(vnodeToDom(child))
+    })
   }
 
   if (el !== n1.el) { // 当新的节点不是原来旧的节点时，执行替换操作
