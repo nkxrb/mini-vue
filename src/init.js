@@ -45,8 +45,9 @@ function initApi (vm) {
   }
 
   vm._v = val => {
-    return val != null ? val.toString() : ''
+    return val
   }
+  vm._s = val => val != null ? val.toString() : ''
 
   vm._l = (list, fn) => {
     let res = []
@@ -55,4 +56,6 @@ function initApi (vm) {
     })
     return res
   }
+
+  vm._self = vm
 }

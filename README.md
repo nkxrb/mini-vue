@@ -39,10 +39,9 @@ npm run dev
 模块化改造，将单个vue文件拆解成多个文件。
 重点探究vue的响应式依赖收集原理，其他的功能就简化了
 
-### 难点
-1. app.js 组件对象抽离，render函数需要重新设计
-2. abserver.js 响应式逻辑抽离，需要考虑依赖收集与更新的操作时机。
-3. dep 与 watcher 之间的多对多关系映射，以及对Dep.target对象的理解
+  - app.js 组件对象抽离，render函数需要重新设计
+  - abserver.js 响应式逻辑抽离，需要考虑依赖收集与更新的操作时机。
+  - dep 与 watcher 之间的多对多关系映射，以及对Dep.target对象的理解
 
 ## v0.0.3
 实现虚拟DOM渲染
@@ -51,3 +50,8 @@ npm run dev
   - 新旧数组，分别使用双指针进行遍历
   - 判断顺序：旧前-新前, 旧后-新后, 旧前-新后, 旧后-新前, 新前依次查找匹配（优先使用key匹配）
   - 重点关注每个vnode的el属性，确保el不遗失
+
+## v0.0.4
+优化现有功能，并使用真实的VUE模板编译功能，对接vite的vite-plugin-vue2插件
+
+  - 引入vite + vite-plugin-vue2,在真实的开发场景中继续实现mini-vue的功能 
