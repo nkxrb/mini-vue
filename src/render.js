@@ -23,9 +23,12 @@ export function createElement (vm, tag, prop, children) {
     const arr = []
     children.forEach(child => {
       if (typeof child === 'string') {
-        child = { vm, tag: 'text', text: child }
+        arr.push({ vm, tag: 'text', text: child })
+      } else if (Array.isArray(child)) {
+        arr.push.apply(arr, child)
+      } else {
+        arr.push(child)
       }
-      arr.push(child)
     })
     vnode.children = arr
   }

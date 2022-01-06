@@ -10,7 +10,6 @@ function flushSchedulerQueue () {
   if (len === 0) {
     return
   }
-  console.log(queue)
   let watcher
   queue.sort((a, b) => a.id - b.id)
   for (let i = 0; i < len; i++) {
@@ -44,11 +43,16 @@ export function watcherqueue (watcher) {
   }
 }
 
-let timer
+/**
+ * nextTick实现，优先使用Promise，再尝试MutationObserver，最后再使用setTimeout
+ * 利用JS微任务机制，将响应式更新操作放到主进程之后执行
+ * @param {*} fn 
+ * @param {*} ctx 
+ */
 export function nextTick (fn, ctx) {
-  console.log(timer)
-  if (timer) {
-    clearTimeout(timer)
-  }
-  timer = setTimeout(fn.call(ctx), 1000)
+  // setTimeout(fn.call(ctx), 0) 使用此方式，还是会执行多次
+  // 先简单的写个微任务
+  queueMicrotask(() => {
+    fn.call(ctx)
+  })
 }

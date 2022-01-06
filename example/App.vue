@@ -1,9 +1,12 @@
 <template>
 	<div>
-		<h2>{{ count }}</h2>
-		<button @click="plus">+1</button>
-		<h3>点击历史记录</h3>
+		<h2>{{ title }}: {{ count }}</h2>
+		<button @click="plus">+1</button><br />
+		<input v-model="todo" /><button @click="addTodo">add</button><br />
+
+		<h3>操作历史记录</h3>
 		<div>
+			<span>与v-for同级的子节点</span><br />
 			<span v-for="(n, i) in countList" :key="n">
 				{{ i }}. 第{{ n }}次点击: {{ n }} <button @click="del(i)">删除</button>
 				<br />
@@ -16,12 +19,23 @@
 export default {
 	data: function () {
 		return {
+			todo: "",
+			title: "",
 			count: 0,
 			test: 1001,
 			countList: [],
 		};
 	},
+	mounted() {
+		this.title = "计数";
+		Promise.resolve().then(() => {
+			this.count = 1001;
+		});
+	},
 	methods: {
+		addTodo() {
+			this.countList = [...this.countList, this.todo];
+		},
 		plus() {
 			this.count++;
 			this.countList = [...this.countList, this.count];
