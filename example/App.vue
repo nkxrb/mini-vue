@@ -8,7 +8,7 @@
 		<div>
 			<span>与v-for同级的子节点</span><br />
 			<span v-for="(n, i) in countList" :key="n">
-				{{ i }}. 第{{ n }}次点击: {{ n }} <button @click="del(i)">删除</button>
+				第{{ n }}次点击: {{ n }} <button @click="del(i)">删除</button>
 				<br />
 			</span>
 		</div>
@@ -32,17 +32,21 @@ export default {
 			this.count = 1001;
 		});
 	},
+	watch: {
+		count: function (newV, oldV) {
+			this.countList.push(newV);
+			console.log(this.countList);
+		},
+	},
 	methods: {
 		addTodo() {
-			this.countList = [...this.countList, this.todo];
+			this.countList.push(this.todo);
 		},
 		plus() {
 			this.count++;
-			this.countList = [...this.countList, this.count];
 		},
 		del(i) {
 			this.countList.splice(i, 1);
-			this.countList = [...this.countList];
 		},
 		testNoReactive() {
 			// 测试修改test属性，不触发重新渲染

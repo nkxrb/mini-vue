@@ -170,7 +170,7 @@ function getKeyMap (arr, startIdx, endIdx) {
  * @returns boolean 
  */
 function sameVnode (n1, n2) {
-  return (n1.tag === n2.tag && n1.text === n2.text)
+  return n1.key === n2.key && (n1.tag === n2.tag && n1.text === n2.text)
 }
 
 /**
@@ -179,23 +179,30 @@ function sameVnode (n1, n2) {
  * @returns 
  */
 function vnodeToDom (vnode) {
-  const { tag, events, attrs, children, text } = vnode
+  const { tag, data, children, text, vm } = vnode
+
   if (tag === 'text') {
     vnode.el = document.createTextNode(text)
     return vnode.el
   }
 
   const el = vnode.el || (vnode.el = document.createElement(tag))
-  if (events) {
-    Object.getOwnPropertyNames(events).forEach(ev => {
-      el.addEventListener(ev, events[ev])
-    })
-  }
 
-  if (attrs) {
-    Object.getOwnPropertyNames(attrs).forEach(name => {
-      el.setAttribute(name, attrs[name])
-    })
+  for (let attr of Object.getOwnPropertyNames(data || {})) {
+    if (attr === 'on') {
+      // 如果存在on属性，则进行事件绑定操作
+      for (let ev of Object.getOwnPropertyNames(data.on)) {
+        el.addEventListener(ev, data.on[ev].bind(vm))
+      }
+    } else if (attr === 'directives') { // 指令集合，v-model,v-xxx 等等
+      data.directives.forEach(direct => {
+
+      })
+    } else if (attr === 'domProps') { // 定义的props, v-model会自动加入一个value
+
+    } else {
+      el.setAttribute(attr, data[attr])
+    }
   }
 
   if (children) {

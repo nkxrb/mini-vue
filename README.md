@@ -55,9 +55,13 @@ npm run dev
 优化现有功能，并使用真实的VUE模板编译功能，对接vite的vite-plugin-vue2插件
 
   - 引入vite + vite-plugin-vue2,在真实的开发场景中继续实现mini-vue的功能
+  - 增加v-for指令的解析
+  - 增加生命周期钩子函数
 
 ## v0.0.5
 完善功能，优化代码逻辑，修复bug
   
   - 当v-for存在同级子节点时，patch函数无法正常工作
   - 完善生命周期钩子函数功能
+  - v-model 指令会转换为props[value]和@input事件
+  - 支持数组类型响应

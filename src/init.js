@@ -1,3 +1,4 @@
+import Watcher from './watcher.js'
 import { abserver, proxy } from './abserver.js'
 import { callhook } from './lifecycle.js'
 import { createElement } from './render.js'
@@ -12,6 +13,7 @@ export function init (vm) {
 }
 
 function initData (vm) {
+  // 初始化顺序：props,methods,data,computed,watch
   const ops = vm.$options
   const props = initProps(vm, ops.props)
   const methods = initMethods(vm, ops.methods)
@@ -26,6 +28,25 @@ function initData (vm) {
     // 将data改造成响应式的
     abserver(data)
   }
+
+  // 初始化watch
+  if (ops.watch) {
+    initWatch(vm, ops.watch)
+  }
+}
+
+function initWatch (vm, watch) {
+  for (const key in watch) {
+    const handler = watch[key]
+    if (Array.isArray(handler)) {
+      for (let i = 0; i < handler.length; i++) {
+        new Watcher(vm, key, handler[i])
+      }
+    } else {
+      new Watcher(vm, key, handler)
+    }
+  }
+
 }
 
 function initMethods (vm, methods) {

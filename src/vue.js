@@ -1,4 +1,3 @@
-import { abserver } from './abserver.js'
 import { createElement } from './render.js'
 import { patch } from './patch.js'
 import { noop } from './shared.js'

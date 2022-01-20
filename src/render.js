@@ -1,23 +1,10 @@
-export function createElement (vm, tag, prop, children) {
+export function createElement (vm, tag, data, children) {
   const vnode = { vm, tag }
-  let events;
-  if (Array.isArray(prop)) {
-    children = prop
-  } else if (prop) {
-    for (let attr of Object.getOwnPropertyNames(prop)) {
-      if (attr === 'on') {
-        // 如果存在on属性，则进行事件绑定操作
-        events = {}
-        for (let ev of Object.getOwnPropertyNames(prop.on)) {
-          events[ev] = prop.on[ev].bind(vm)
-        }
-      } else {
-        vm[attr] = prop[attr]
-      }
-    }
+  if (Array.isArray(data)) {
+    children = data
+    data = undefined
   }
-
-  events && (vnode.events = events)
+  vnode.data = data
 
   if (children && children.length > 0) {
     const arr = []
@@ -25,7 +12,8 @@ export function createElement (vm, tag, prop, children) {
       if (typeof child === 'string') {
         arr.push({ vm, tag: 'text', text: child })
       } else if (Array.isArray(child)) {
-        arr.push.apply(arr, child)
+        // 没使用concat, 因为concat不改变原数组，需要重新赋值
+        arr.push.apply(arr, child) // 利用apply的数组参数将两个数组合并
       } else {
         arr.push(child)
       }
