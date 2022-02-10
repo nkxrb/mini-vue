@@ -1,4 +1,11 @@
+import { isReservedTag } from "./shared"
+
 export function createElement (vm, tag, data, children) {
+
+  if (!isReservedTag(tag)) {
+    return createComponent(vm, tag, data, children)
+  }
+
   const vnode = { vm, tag }
   if (Array.isArray(data)) {
     children = data
@@ -21,4 +28,9 @@ export function createElement (vm, tag, data, children) {
     vnode.children = arr
   }
   return vnode
+}
+
+
+function createComponent () {
+
 }

@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<hello-world :msg="msg"></hello-world>
 		<h2>{{ title }}: {{ count }}</h2>
 		<button @click="plus">+1</button><br />
 		<input v-model="todo" /><button @click="addTodo">add</button><br />
@@ -16,10 +17,13 @@
 </template>
 
 <script>
+import HelloWorld from "./HelloWorld.vue";
 export default {
+	components: { HelloWorld },
 	data: function () {
 		return {
 			todo: "",
+			msg: "nkxrb",
 			title: "",
 			count: 0,
 			test: 1001,
