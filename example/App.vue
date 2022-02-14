@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<hello-world :msg="msg"></hello-world>
+		<!-- <hello-world :msg="msg"></hello-world> -->
 		<h2>{{ title }}: {{ count }}</h2>
 		<button @click="plus">+1</button><br />
 		<input v-model="todo" /><button @click="addTodo">add</button><br />
@@ -8,6 +8,7 @@
 		<h3>操作历史记录</h3>
 		<div>
 			<span>与v-for同级的子节点</span><br />
+			<!-- <div v-if="count > 1003">asd</div> -->
 			<span v-for="(n, i) in countList" :key="n">
 				第{{ n }}次点击: {{ n }} <button @click="del(i)">删除</button>
 				<br />

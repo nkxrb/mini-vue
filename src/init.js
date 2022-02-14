@@ -70,6 +70,8 @@ function initApi (vm) {
   }
   vm._s = val => val != null ? val.toString() : ''
 
+  vm._e = () => ''
+
   vm._l = (list, fn) => {
     let res = []
     list.forEach((n, i) => {
